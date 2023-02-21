@@ -1,6 +1,7 @@
 package esprit.tunisiacamp.entities;
 
 import esprit.tunisiacamp.entities.camping.CampingGround;
+import esprit.tunisiacamp.entities.camping.Favorite;
 import esprit.tunisiacamp.entities.enums.Grouping;
 import esprit.tunisiacamp.entities.enums.Season;
 import lombok.*;
@@ -30,4 +31,6 @@ public class Activity implements Serializable {
     Grouping grouping;
     @ManyToMany(mappedBy = "activities")
     List<CampingGround> campingGrounds;
+    @OneToMany(mappedBy = "activity_fav")
+    List<Favorite> favorites;
 }

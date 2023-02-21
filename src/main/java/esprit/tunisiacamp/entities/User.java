@@ -1,6 +1,7 @@
 package esprit.tunisiacamp.entities;
 
 import esprit.tunisiacamp.entities.camping.CampingGround;
+import esprit.tunisiacamp.entities.camping.Favorite;
 import esprit.tunisiacamp.entities.forum.*;
 import esprit.tunisiacamp.entities.forum.Post;
 import esprit.tunisiacamp.entities.shopping.Transaction;
@@ -58,4 +59,5 @@ public class User implements Serializable {
     CampingGround managed_ground;
     @OneToMany(mappedBy = "shopper")
     List<Transaction> transactions;
+
 }

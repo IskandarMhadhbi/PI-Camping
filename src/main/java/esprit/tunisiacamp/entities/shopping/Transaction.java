@@ -30,10 +30,15 @@ public class Transaction implements Serializable {
     @Temporal(TemporalType.DATE)
     Date rent_end_date;
     float price;
+    Boolean paid;
+    Boolean shipment;
+    String payment_method;
     @ManyToOne
     Tool tool;
     @OneToOne
     Promotion promotion;
     @ManyToOne
     User shopper;
+    @ManyToOne
+    Delivery delivery;
 }

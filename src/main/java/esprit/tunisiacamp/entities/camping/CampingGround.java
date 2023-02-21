@@ -39,5 +39,7 @@ public class CampingGround implements Serializable {
     List<Advantage> advantages;
     @OneToMany(mappedBy = "review_Ground")
     List<Review> reviews;
+    @OneToMany(mappedBy = "campingG_fav")
+    List<Favorite> favorites;
 
 }

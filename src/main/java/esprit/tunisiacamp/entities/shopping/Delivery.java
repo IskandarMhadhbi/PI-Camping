@@ -25,8 +25,8 @@ public class Delivery implements Serializable {
     Date delivery_date;
     float weight;
     Boolean done;
-    @OneToOne
-    Invoice invoice;
+    @OneToMany(mappedBy = "delivery")
+    List<Transaction> shipments;
     @ManyToOne
     Driver driver;
 }
