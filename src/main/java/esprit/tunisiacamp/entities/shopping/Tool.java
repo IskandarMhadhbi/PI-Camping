@@ -1,7 +1,6 @@
 package esprit.tunisiacamp.entities.shopping;
 
-import esprit.tunisiacamp.entities.enums.Season;
-import esprit.tunisiacamp.entities.enums.Variety;
+import esprit.tunisiacamp.entities.enums.*;
 import esprit.tunisiacamp.entities.enums.Season;
 import esprit.tunisiacamp.entities.enums.Variety;
 import esprit.tunisiacamp.entities.shopping.Critique;
@@ -31,7 +30,11 @@ public class Tool implements Serializable {
     Season season;
     float price;
     boolean availibility;
+    int stock;
+    @Enumerated(EnumType.STRING)
+    Type type;
     @OneToMany(mappedBy = "tool" )
     List<Critique> critiques;
+
 
 }

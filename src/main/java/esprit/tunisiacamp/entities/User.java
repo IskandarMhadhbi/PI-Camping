@@ -9,8 +9,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax. persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import esprit.tunisiacamp.entities.enums.Provider;
 import esprit.tunisiacamp.entities.enums.State;
 
@@ -38,10 +38,19 @@ public class User implements Serializable {
     String email;
     int telephone;
     int cin;
+    String  picture;
+    //shop part
     String shopname;
     int shop_phone;
     int postal_code;
     String address;
+    String  shop_picture;
+    @ElementCollection
+    @CollectionTable(name="shop_profit")
+    @MapKeyColumn(name="month")
+    @Column(name="profit")
+    Map<String, Double> monthlyProfit;
+    //
     @Enumerated(EnumType.STRING)
     Provider  prodiver;
     @Enumerated(EnumType.STRING)
