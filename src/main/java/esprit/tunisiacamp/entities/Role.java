@@ -22,6 +22,7 @@ public class Role implements Serializable {
      @Id
      @GeneratedValue (strategy = GenerationType.IDENTITY)
      long idRole;
+     @Enumerated(EnumType.STRING)
      role role;
      @OneToMany
      List<User> users;
