@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.entities.shopping;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.tunisiacamp.entities.User;
 import esprit.tunisiacamp.entities.User;
 import esprit.tunisiacamp.entities.enums.Type;
@@ -9,6 +10,7 @@ import javax. persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Getter
 @Setter
@@ -23,6 +25,7 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long idTransaction;
+    String serial_code=this.serial_code_gen();
     @Enumerated(EnumType.STRING)
     Type type;
     @Temporal(TemporalType.DATE)
@@ -31,14 +34,23 @@ public class Transaction implements Serializable {
     Date rent_end_date;
     float price;
     Boolean paid;
-    Boolean shipment;
+    Boolean for_shipment;
     String payment_method;
+    @JsonIgnore
     @ManyToOne
     Tool tool;
+    @JsonIgnore
     @OneToOne
     Promotion promotion;
+    @JsonIgnore
     @ManyToOne
     User shopper;
+    @JsonIgnore
     @ManyToOne
     Delivery delivery;
+    String serial_code_gen(){
+        long base = System.currentTimeMillis();
+        // Combine the base and random number to create the serial code
+        return Long.toString(base) + Long.toString(this.idTransaction);
+    }
 }

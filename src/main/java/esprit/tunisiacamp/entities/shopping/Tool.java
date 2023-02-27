@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.entities.shopping;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.tunisiacamp.entities.enums.*;
 import esprit.tunisiacamp.entities.enums.Season;
 import esprit.tunisiacamp.entities.enums.Variety;
@@ -31,8 +32,10 @@ public class Tool implements Serializable {
     float price;
     boolean availibility;
     int stock;
+    boolean by_shop;
     @Enumerated(EnumType.STRING)
     Type type;
+    @JsonIgnore
     @OneToMany(mappedBy = "tool" )
     List<Critique> critiques;
 
