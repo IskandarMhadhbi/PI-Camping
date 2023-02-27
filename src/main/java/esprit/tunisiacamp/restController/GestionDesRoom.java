@@ -1,0 +1,32 @@
+package esprit.tunisiacamp.restController;
+
+import esprit.tunisiacamp.entities.forum.ChatRoom;
+import esprit.tunisiacamp.services.Iservices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class GestionDesRoom {
+
+    @Autowired
+    Iservices iservices ;
+
+    @PostMapping("AjouteChatroom")
+    public ChatRoom room (@RequestBody ChatRoom room ){
+        return    iservices.ajoutroom(room);
+    }
+    @PutMapping("AjouterUserRoom")
+    void userroom (@RequestParam long idUser , @RequestParam long idroom)
+    {
+        iservices.affecteruseraroom(idUser, idroom);
+    }
+    @PostMapping("ModifierRoom")
+    void modifroom(@RequestBody ChatRoom room){
+        iservices.midifroom(room);
+    }
+
+    @DeleteMapping("SupprimerRoom")
+    void supprimerRoom(@RequestParam  long idroom){
+        iservices.suprimerroom(idroom);
+    }
+}

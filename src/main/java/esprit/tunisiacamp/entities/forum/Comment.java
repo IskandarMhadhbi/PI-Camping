@@ -21,9 +21,10 @@ public class Comment implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long idComment;
-    String content;
-    @Temporal(TemporalType.DATE)
-    Date creation;
+
+    String contentComment;
+    @Temporal(TemporalType.TIME)
+    Date creationComment;
     @ManyToOne
     User user;
     @ManyToOne

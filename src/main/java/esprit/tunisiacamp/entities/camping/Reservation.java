@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.entities.camping;
 
+import esprit.tunisiacamp.entities.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax. persistence.*;
@@ -27,4 +28,6 @@ public class Reservation implements Serializable {
     Date end_date;
     @ManyToOne
     CampingGround campingGround;
+    @OneToOne
+    private User userReservation;
 }

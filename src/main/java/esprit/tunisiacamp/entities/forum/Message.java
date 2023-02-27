@@ -20,9 +20,9 @@ public class Message implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long idMessage;
-    String content;
-    @Temporal(TemporalType.DATE)
-    Date creation;
+    String contentMessage;
+    @Temporal(TemporalType.TIME)
+    Date creationMessage;
     @ManyToOne
     ChatRoom chatRoom;
     @ManyToOne

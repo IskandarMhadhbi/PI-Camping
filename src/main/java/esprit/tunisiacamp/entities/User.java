@@ -49,7 +49,7 @@ public class User implements Serializable {
     boolean enable;
     @ManyToMany
     List<ChatRoom> chatRooms;
-    @OneToMany
+    @OneToMany (mappedBy = "user", cascade = CascadeType.REMOVE)
     List<Post> posts;
     @OneToMany(mappedBy = "user")
     List<Claim> my_claims;
@@ -60,4 +60,6 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "shopper")
     List<Transaction> transactions;
 
+    public void addChatroom(ChatRoom chatroom) {
+    }
 }

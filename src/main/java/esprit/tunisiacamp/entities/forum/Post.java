@@ -21,13 +21,18 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long idPost;
-    String Content;
-    @Temporal(TemporalType.DATE)
+    String ContentPost;
+    @Temporal(TemporalType.TIME)
+            @Column(nullable = false)
     Date creation;
-    @OneToMany(mappedBy = "post")
+@PrePersist
+private void onCreate (){
+    creation = new Date() ;
+}
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     List<Comment> comments;
     @ManyToOne
     User user;
-    @OneToMany(mappedBy = "post_rate")
+    @OneToMany(mappedBy = "post_rate", cascade = CascadeType.REMOVE)
     List<Rating> ratings;
 }
