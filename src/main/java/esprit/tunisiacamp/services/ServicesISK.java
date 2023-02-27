@@ -77,7 +77,10 @@ public class ServicesISK implements IServicesISK {
 
     //region critique
     @Override
-    public Critique addCritique(Critique critique) {
+    public Critique addCritique(Critique critique,long tool_id) {
+        Tool filler=new Tool();
+        critique.setTool(filler);
+        critique.getTool().setIdTool(tool_id);
         return cr_repo.save(critique);
     }
 

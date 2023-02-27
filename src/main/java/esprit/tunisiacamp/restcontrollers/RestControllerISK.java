@@ -39,7 +39,7 @@ public class RestControllerISK {
 
     //region critique
     @PostMapping("/ISK/addcritique")
-    public Critique addCritique(@RequestBody Critique critique){return service.addCritique(critique);}
+    public Critique addCritique(@RequestBody Critique critique,@RequestParam long tool_id){return service.addCritique(critique,tool_id);}
     @DeleteMapping("/ISK/deletecritique")
     public void deleteCritique(@RequestBody Critique critique){service.deleteCritique(critique);}
     @PutMapping("/ISK/updatecritique")

@@ -24,7 +24,7 @@ public interface IServicesISK {
     //endregion transaction
 
     //region critique
-    Critique addCritique(Critique critique);
+    Critique addCritique(Critique critique,long tool_id);
     void deleteCritique(Critique critique);
     Critique updateCritique(Critique critique);
     List<Critique> getCritiquesOfTool(long tool_id);

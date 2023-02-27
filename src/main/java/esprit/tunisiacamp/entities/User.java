@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.tunisiacamp.entities.camping.CampingGround;
 import esprit.tunisiacamp.entities.camping.Favorite;
 import esprit.tunisiacamp.entities.forum.*;
@@ -27,6 +28,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long idUser;
+    @JsonIgnore
     @ManyToOne
     Role role;
     String username;
@@ -56,16 +58,22 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     State state;
     boolean enable;
+    @JsonIgnore
     @ManyToMany
     List<ChatRoom> chatRooms;
+    @JsonIgnore
     @OneToMany
     List<Post> posts;
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     List<Claim> my_claims;
+    @JsonIgnore
     @OneToMany(mappedBy = "admin")
     List<Claim> admin_claims;
+    @JsonIgnore
     @ManyToOne
     CampingGround managed_ground;
+    @JsonIgnore
     @OneToMany(mappedBy = "shopper")
     List<Transaction> transactions;
 

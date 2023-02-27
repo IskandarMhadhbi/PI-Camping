@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax. persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -50,7 +51,8 @@ public class Transaction implements Serializable {
     Delivery delivery;
     String serial_code_gen(){
         long base = System.currentTimeMillis();
-        // Combine the base and random number to create the serial code
-        return Long.toString(base) + Long.toString(this.idTransaction);
+        LocalDate now= LocalDate.now();
+        // Combine the ms time and current date to create the serial code
+        return Long.toString(base) + now;
     }
 }
