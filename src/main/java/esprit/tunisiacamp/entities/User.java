@@ -5,6 +5,7 @@ import esprit.tunisiacamp.entities.camping.CampingGround;
 import esprit.tunisiacamp.entities.camping.Favorite;
 import esprit.tunisiacamp.entities.forum.*;
 import esprit.tunisiacamp.entities.forum.Post;
+import esprit.tunisiacamp.entities.shopping.Tool;
 import esprit.tunisiacamp.entities.shopping.Transaction;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -76,5 +77,9 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "shopper")
     List<Transaction> transactions;
+    @JsonIgnore
+    @ManyToMany
+    List<Tool> my_tools;
+
 
 }
