@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.entities.forum;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.tunisiacamp.entities.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -21,8 +22,12 @@ public class Rating implements Serializable {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long idRating;
     int value;
+    @JsonIgnore
+
     @ManyToOne
     Post post_rate;
+    @JsonIgnore
+
     @ManyToOne
     User user;
 }

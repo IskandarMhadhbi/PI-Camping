@@ -1,6 +1,7 @@
 package esprit.tunisiacamp.restController;
 
 import esprit.tunisiacamp.entities.forum.Post;
+import esprit.tunisiacamp.services.IservicePoste;
 import esprit.tunisiacamp.services.Iservices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,19 +13,27 @@ import java.util.List;
 @RestController
 
 public class GestionDesPostes {
-    @Autowired
-    Iservices iservices ;
-    @PutMapping("AjouterPost")
-    String ajouterpost(@RequestBody Post p, @RequestParam long idUser, @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") Date creation){
-        String[] interdit = {"non", "oui"};
 
+@Autowired
+    IservicePoste iservicePoste  ;
+
+    @PutMapping("AjouterPost")
+    String ajouterpost(@RequestBody Post p, @RequestParam long idUser){
+      //  String[] interdit = {"non", "oui"};
+        /*
         for (String word : interdit) {
-            if (p.getContentPost().contains(word)) {
+            if (p.getContentPost().toLowerCase().contains(word.toLowerCase())) {
             return "Votre poste nest pas approuve car le mot '" + word + "' est interdit. \n"
                     + "\"veuillez reessayer\"";
         }
         }
-        iservices.ajouterpost(p,idUser) ;
+        */
+
+        if (iservicePoste.contientMotInterdit(p.getContentPost().toLowerCase())) {
+            return ("votre poste  contient un mot interdit. " );
+        }
+
+        iservicePoste.ajouterpost(p,idUser) ;
 
         return "votre poste est ajouter avec succes" ;
 
@@ -32,14 +41,14 @@ public class GestionDesPostes {
 
     @GetMapping("AfficherPostes")
     public List<Post> getpost (){
-        return iservices.getposts();
+        return iservicePoste.getposts();
     }
     @DeleteMapping("SupprimerPost")
     void deletepost(@RequestParam long idPost){
-        iservices.supprimerpost(idPost);
+        iservicePoste.supprimerpost(idPost);
     }
     @PostMapping("ModifierPost")
     void modifposte(@RequestBody Post post){
-        iservices.modifpost(post);
+        iservicePoste.modifpost(post);
     }
 }

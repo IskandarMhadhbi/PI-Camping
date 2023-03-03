@@ -19,14 +19,12 @@ public class Restcontroller {
     void suppuser (@RequestParam long iduser){
         iservices.supprimeruser(iduser);
     }
-/*
-    @GetMapping("getuserbynom")
-    public User getuser(@PathVariable String firstname){
-        return iservices.getuserbynom(firstname) ;
-    }
-*/
 
 
+@PostMapping("adddmots")
+    void ajouter(@RequestBody List<Mots>mots){
+        iservices.ajoutermots(mots);
+}
 
 
 

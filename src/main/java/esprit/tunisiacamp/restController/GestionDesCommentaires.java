@@ -1,6 +1,7 @@
 package esprit.tunisiacamp.restController;
 
 import esprit.tunisiacamp.entities.forum.Comment;
+import esprit.tunisiacamp.services.IserviceCommentaire;
 import esprit.tunisiacamp.services.Iservices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,27 +11,34 @@ import java.util.List;
 @RestController
 public class GestionDesCommentaires {
 
-
-    @Autowired
-    Iservices iservices ;
+        @Autowired
+    IserviceCommentaire iserviceCommentaire ;
 
     @PutMapping("AjouterCommentaire")
-    void ajoutcomment (@RequestBody Comment m, @RequestParam long idPost, @RequestParam long idUser){
-        iservices.ajoutercommentare(m,idPost,idUser);
+    String ajoutcomment (@RequestBody Comment m, @RequestParam long idPost, @RequestParam long idUser){
+
+
+        if (iserviceCommentaire.contientMotInterdit(m.getContentComment().toLowerCase())) {
+            return ("votre commentaire  contient un mot interdit. " );
+        }
+        iserviceCommentaire.ajoutercommentare(m,idPost,idUser);
+
+        return "votre commentaire est ajouter avec succes" ;
+
     }
 
     @GetMapping("Affichercommentaires")
      List<Comment> getcomment (){
-        return iservices.getComments();
+        return iserviceCommentaire.getComments();
     }
 
     @DeleteMapping("SupprimerCommenteire")
     void suppcomment (@RequestParam long idcomment){
-        iservices.supprimercommentaire(idcomment);
+        iserviceCommentaire.supprimercommentaire(idcomment);
     }
 
     @PostMapping("ModifierCommentaire")
     void modifcomment(@RequestBody Comment commentaire){
-        iservices.modifierCommentaire( commentaire );
+        iserviceCommentaire.modifierCommentaire( commentaire );
     }
 }

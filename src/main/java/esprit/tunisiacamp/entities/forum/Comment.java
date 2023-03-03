@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.entities.forum;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.tunisiacamp.entities.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -25,8 +26,12 @@ public class Comment implements Serializable {
     String contentComment;
     @Temporal(TemporalType.TIME)
     Date creationComment;
+    @JsonIgnore
+
     @ManyToOne
     User user;
+    @JsonIgnore
+
     @ManyToOne
     Post post;
 }
