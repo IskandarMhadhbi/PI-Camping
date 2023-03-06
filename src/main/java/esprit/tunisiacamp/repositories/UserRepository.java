@@ -14,6 +14,12 @@ public interface UserRepository extends CrudRepository<User,Long> {
 
     @Transactional
     @Modifying
-    @Query("update User  set state=?2 where id=?1")
+    @Query("update User  set state=?2 where idUser=?1")
     void deleteUser(long id, State state);
+    @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
+    public User findByVerificationCode(String code);
+
+    @Query("SELECT u FROM User u WHERE u.email = :username")
+    public User getUserByUsername(@Param("username") String username);
+    
 }
