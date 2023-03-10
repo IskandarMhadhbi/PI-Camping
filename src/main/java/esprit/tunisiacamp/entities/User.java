@@ -2,6 +2,7 @@ package esprit.tunisiacamp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.tunisiacamp.entities.camping.CampingGround;
+import esprit.tunisiacamp.entities.enums.role;
 import esprit.tunisiacamp.entities.forum.*;
 import esprit.tunisiacamp.entities.forum.Post;
 import esprit.tunisiacamp.entities.shopping.Transaction;
@@ -13,6 +14,9 @@ import java.util.*;
 
 import esprit.tunisiacamp.entities.enums.Provider;
 import esprit.tunisiacamp.entities.enums.State;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @Setter
@@ -22,13 +26,15 @@ import esprit.tunisiacamp.entities.enums.State;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class User implements Serializable {
+@Table(name = "_user")
+public class User implements Serializable, UserDetails {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    long idUser;
-    @JsonIgnore
-    @ManyToOne
-    Role role ;
+    Integer idUser;
+    //@JsonIgnore
+    //@ManyToOne
+    @Enumerated(EnumType.STRING)
+    role role;
     String username;
     String password;
     String firstname;
@@ -48,6 +54,7 @@ public class User implements Serializable {
     State state;
     String verificationCode;
     boolean enable;
+    String verifiepwd;
     @JsonIgnore
     @ManyToMany
     List<ChatRoom> chatRooms;
@@ -70,6 +77,47 @@ public class User implements Serializable {
 
     private Set<Autority> autority;
 
+    public Set<Autority> getAuthFromBase(){
+        return this.autority;
+    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>() ;
+        for (Autority authority : autority) {
+            if (authority !=null)
+                authorities.add(new SimpleGrantedAuthority(authority.getName()));
+            else
+                System.out.println("----- U have no AUtority Bro ----");
+        }
+        return authorities;
+    }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+    @Override
+    public String getUsername() {
+        return email;
+    }
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
 }
