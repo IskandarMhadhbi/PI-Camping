@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.tunisiacamp.entities.camping.CampingGround;
 import esprit.tunisiacamp.entities.forum.*;
 import esprit.tunisiacamp.entities.forum.Post;
+import esprit.tunisiacamp.entities.shopping.Delivery;
 import esprit.tunisiacamp.entities.shopping.Transaction;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -48,6 +49,7 @@ public class User implements Serializable {
     State state;
     String verificationCode;
     boolean enable;
+    Boolean availability;
     @JsonIgnore
     @ManyToMany
     List<ChatRoom> chatRooms;
@@ -66,6 +68,12 @@ public class User implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "shopper")
     List<Transaction> transactions;
+    @ManyToOne()
+    User shopper;
+    @OneToMany(mappedBy = "shopper")
+    List<User> drivers;
+    @OneToMany
+    List<Delivery> deliveryList;
     @OneToMany(mappedBy = "UserAuth" ,fetch = FetchType.EAGER)
 
     private Set<Autority> autority;
