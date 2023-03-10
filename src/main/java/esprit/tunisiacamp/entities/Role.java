@@ -26,6 +26,6 @@ public class Role implements Serializable {
      @Enumerated(EnumType.STRING)
      role role;
 
-     @OneToMany(mappedBy = "role")
-     List<User> users;
+     //@OneToMany(mappedBy = "role")
+     //List<User> users;
 }

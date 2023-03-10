@@ -1,35 +1,37 @@
 package esprit.tunisiacamp.config;
 
-import esprit.tunisiacamp.entities.User;
-import esprit.tunisiacamp.entities.enums.Provider;
+
 import esprit.tunisiacamp.services.CustomOAuth2UserService;
 import esprit.tunisiacamp.services.UserIService;
-import esprit.tunisiacamp.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Configuration
-@EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
+public class WebSecurityConfig  {
+/*
     @Autowired
     ClientRegistrationRepository clientRegistrationRepository;
 
@@ -89,6 +91,72 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomOAuth2UserService oauthUserService;
     @Autowired
     UserIService userIService;
+*/
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
+    private final LogoutHandler logoutHandler;
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .antMatchers("/register","/authenticate","/login/oauth/**","/login/**","/rest/swagger-ui/index.html#/","/process_register","/verify")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin().permitAll()
+                .loginPage("/login")
+                .usernameParameter("email")
+                .passwordParameter("pass")
+                .defaultSuccessUrl("/rest/swagger-ui/index.html#")
+                .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(oauthUserService)
+                .and()
+                .successHandler(new AuthenticationSuccessHandler() {
+
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                                        Authentication authentication) throws IOException, ServletException {
+                        System.out.println("AuthenticationSuccessHandler invoked");
+                        System.out.println("Authentication name: " + authentication.getName());
+                        // User u = new User();
+                        //u.setProdiver(Provider.GOOGLE);
+                        //u.setUsername(authentication.getName());
+                        //userService.addUser(u);
+                        //System.out.println("Authentication name: " + authentication.getCredentials());
+
+                        CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
+                        try {
+                            userIService.processOAuthPostLogin(oauthUser.getEmail());
+                        } catch (MessagingException e) {
+                            throw new RuntimeException(e);
+                        }
+                        response.sendRedirect("/rest/swagger-ui/index.html#");
+                    }
+                })
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout()
+                .logoutUrl("/rest/logout")
+                .addLogoutHandler(logoutHandler)
+                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+        ;
+
+        return http.build();
+    }
+    @Autowired
+    private CustomOAuth2UserService oauthUserService;
+    @Autowired
+    UserIService userIService;
 
 }

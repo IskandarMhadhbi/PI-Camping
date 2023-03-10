@@ -2,9 +2,11 @@ package esprit.tunisiacamp.restControllers;
 
 import esprit.tunisiacamp.entities.User;
 import esprit.tunisiacamp.entities.enums.State;
+import esprit.tunisiacamp.repositories.UserRepository;
 import esprit.tunisiacamp.services.UserIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -20,24 +22,28 @@ import java.io.UnsupportedEncodingException;
 public class UserRestController {
     @Autowired
     UserIService userIService;
+    @Autowired
+    UserRepository repository;
     @PostMapping("/addUser")
     public void addUser(@RequestBody User user){
         userIService.addUser(user);
     }
-    @GetMapping("/FindById")
-    public User FindById(long id){
+    @PreAuthorize("hasAnyAuthority('CAMPER','MANAGER','SHOP','ADMIN')")
+    @GetMapping("/FindById/{id}")
+    public User FindById(@PathVariable Integer id){
         return userIService.FindById(id);
     }
     @PutMapping("/updateUser")
     public void updateUser(@RequestBody User user){
         userIService.updateUser(user);
     }
-    @PutMapping("/deleteOrDisableUser")
-    public void deleteUser(long id, State state){
+    @PreAuthorize("hasAnyAuthority('CAMPER','MANAGER','SHOP','ADMIN')")
+    @PutMapping("/deleteOrDisableUser/{id}/{state}")
+    public void deleteUser(@PathVariable Integer id,@PathVariable State state){
         userIService.deleteUser(id,state);
     }
     @PutMapping("/affecterUserToRole")
-    public void affecterUserToRole(long idUser , long idRole){
+    public void affecterUserToRole(Integer idUser , long idRole){
         userIService.affecterUserToRole(idUser,idRole);
     }
 
@@ -61,7 +67,8 @@ public class UserRestController {
             return "verify_fail";
         }
     }
-    @GetMapping("/hello")
+    @GetMapping("/test")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String hello(){
         return "hello";
     }
@@ -75,4 +82,18 @@ public class UserRestController {
         return "redirect:/login?logout";
     }
 */
+    @PutMapping("/resetpwd")
+    public void resetPwd(String email){
+        userIService.resetPassword(email);
+    }
+    @GetMapping("/verifiePwd")
+    public  String verifiePwd(String code,String pwd){
+        return userIService.verifiePwd(code,pwd);
+    }
+
+
+    @GetMapping("/Getbymail")
+            public User getBymail(){
+        return repository.findByEmail("benabdallahjalel@esprit.tn").get();
+    }
         }
