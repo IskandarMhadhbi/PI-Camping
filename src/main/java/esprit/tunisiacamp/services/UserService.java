@@ -62,7 +62,7 @@ public class UserService implements UserIService{
     public void affecterUserToRole(Integer idUser, long idRole) {
         Role role = roleRepository.findById(idRole).get();
         User user = userRepository.findById(idUser).get();
-        //user.setRole(role);
+        user.setRole(role);
         userRepository.save(user);
     }
 
@@ -142,7 +142,7 @@ public class UserService implements UserIService{
             newUser.setPassword(pwd);
             newUser.setProdiver(Provider.GOOGLE);
             newUser.setEnable(true);
-            newUser.setRole(role.CAMPER);
+            newUser.setRole1(role.CAMPER);
 
             userRepository.save(newUser);
 /*

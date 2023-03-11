@@ -16,16 +16,14 @@ import esprit.tunisiacamp.entities.enums.role;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "roles")
 public class Role implements Serializable {
 
      @Id
-     @Column(name = "role_id")
      @GeneratedValue (strategy = GenerationType.IDENTITY)
      long idRole;
      @Enumerated(EnumType.STRING)
      role role;
 
-     //@OneToMany(mappedBy = "role")
-     //List<User> users;
+     @OneToMany(mappedBy = "role")
+     List<User> users;
 }

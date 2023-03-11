@@ -42,8 +42,8 @@ public class UserRestController {
     public void deleteUser(@PathVariable Integer id,@PathVariable State state){
         userIService.deleteUser(id,state);
     }
-    @PutMapping("/affecterUserToRole")
-    public void affecterUserToRole(Integer idUser , long idRole){
+    @PutMapping("/affecterUserToRole/{iduser}/{idrole}")
+    public void affecterUserToRole(@PathVariable("iduser") Integer idUser ,@PathVariable("idrole") long idRole){
         userIService.affecterUserToRole(idUser,idRole);
     }
 
@@ -67,6 +67,7 @@ public class UserRestController {
             return "verify_fail";
         }
     }
+
     @GetMapping("/test")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String hello(){
