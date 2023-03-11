@@ -31,10 +31,11 @@ public class User implements Serializable, UserDetails {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     Integer idUser;
-    //@JsonIgnore
-    //@ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    Role role;
     @Enumerated(EnumType.STRING)
-    role role;
+    role role1;
     String username;
     String password;
     String firstname;
@@ -55,6 +56,10 @@ public class User implements Serializable, UserDetails {
     String verificationCode;
     boolean enable;
     String verifiepwd;
+    @Temporal(TemporalType.DATE)
+    Date lastCnx;
+    String lastCnxCode;
+    Boolean lastC;
     @JsonIgnore
     @ManyToMany
     List<ChatRoom> chatRooms;
