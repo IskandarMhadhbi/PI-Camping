@@ -45,7 +45,7 @@ public class FavoriteService implements IFavoriteService{
     public void affecterFavorite(Integer favoriteId, Integer campingId, Integer userId) {
         Favorite fa = favoriteRepositorie.findById(Long.valueOf(favoriteId)).get();
         CampingGround cp = campingGroundRepositories.findById(Long.valueOf(campingId)).get();
-        User us = userRepository.findById(Long.valueOf(userId)).get();
+        User us = userRepository.findById(userId).get();
         fa.setUser_fav(us);
         fa.setCampingG_fav(cp);
         favoriteRepositorie.save(fa);
