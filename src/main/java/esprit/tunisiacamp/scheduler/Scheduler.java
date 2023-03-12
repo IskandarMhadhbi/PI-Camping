@@ -33,7 +33,21 @@ public class Scheduler {
     AutorityRepository autorityRepository;
     @Autowired
     RoleRepository roleRepository;
+    //@Scheduled(cron = "* * * * * *")
+    public void affecterUseraAutority(){
+        List<User> users = (List<User>) userRepository.findAll();
+        List<Autority> autorities = (List<Autority>) autorityRepository.findAll();
+        for(User u : users){
+            Autority au = autorityRepository.getAutority(u);
+                    if(au==null){
+                        Autority a = new Autority();
+                        a.setUserAuth(u);
+                        a.setName(u.getRole1().toString());
+                        autorityRepository.save(a);
+                    }
 
+        }
+    }
     //@Scheduled(cron = "* * * * * * ")
     public void Notification(){
         List<User> users = (List<User>) userRepository.findAll();
@@ -60,7 +74,17 @@ public class Scheduler {
 
         System.out.println(message.getSid());
     }
-
+   //@Scheduled(cron = "* * * * * *")
+    public void affecterUserARole(){
+        List<User> users = (List<User>) userRepository.findAll();
+        for (User u : users){
+            Role ro = roleRepository.getRole(u.getRole1());
+            if (ro!=null){
+                u.setRole(ro);
+                userRepository.save(u);
+            }
+        }
+    }
 
 
 
