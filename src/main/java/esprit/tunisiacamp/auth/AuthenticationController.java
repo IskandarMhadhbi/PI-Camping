@@ -1,39 +1,119 @@
 package esprit.tunisiacamp.auth;
 
 
+import esprit.tunisiacamp.entities.Autority;
+import esprit.tunisiacamp.entities.Role;
 import esprit.tunisiacamp.entities.User;
+import esprit.tunisiacamp.entities.enums.Provider;
+import esprit.tunisiacamp.entities.enums.role;
+import esprit.tunisiacamp.repositories.AutorityRepository;
+import esprit.tunisiacamp.repositories.RoleRepository;
 import esprit.tunisiacamp.repositories.UserRepository;
+import esprit.tunisiacamp.services.UserIService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
   @Autowired
   UserRepository userRepository;
   private final AuthenticationService service;
+  private final PasswordEncoder passwordEncoder;
+  @Autowired
+  RoleRepository roleRepository;
+  @Autowired
+  UserIService userIService;
+  @Autowired
+  AutorityRepository autorityRepository;
+
   @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register(
-          @RequestBody User request
-  ) {
+  public ResponseEntity<?> register(@RequestBody RegisterRequest request,HttpServletRequest req) throws MessagingException, UnsupportedEncodingException {
+    if(userRepository.existsByEmail(request.getEmail())){
+      return ResponseEntity.badRequest().body(new MessageResponse("Error: email is use!!!"));
+    }
+      User user = new User();
+    user.setLastname(request.getLastname());
+    user.setFirstname(request.getFirstname());
+    user.setEmail(request.getEmail());
+    user.setPassword(passwordEncoder.encode(request.getPassword()));
+    user.setProdiver(Provider.Local);
+    user.setLastC(false);
+    user.setLastCnx(new Date());
+    String rol = request.getRole();
+    Autority a = new Autority();
+    //role setRole;
+    if(rol.equals("ADMIN")){
+      Role r = roleRepository.getRole(role.ADMIN);
+              //.orElseThrow(()->new RuntimeException("Error: Role is not found."));
+      user.setRole(r);
+      a.setName("ADMIN");
+    } else if (rol.equals("CAMPER")) {
+      Role r = roleRepository.getRole(role.CAMPER);
+              //.orElseThrow(()->new RuntimeException("Error: Role is not found."));
+      user.setRole(r);
+      a.setName("CAMPER");
+    }else if (rol.equals("MANAGER")) {
+      Role r = roleRepository.getRole(role.MANAGER);
+              //.orElseThrow(()->new RuntimeException("Error: Role is not found."));
+      user.setRole(r);
+      a.setName("MANAGER");
+    }else if (rol.equals("SHOP")) {
+      Role r = roleRepository.getRole(role.SHOP);
+             // .orElseThrow(()->new RuntimeException("Error: Role is not found."));
+      user.setRole(r);
+      a.setName("SHOP");
+    }else if (rol.equals("DRIVER")) {
+      Role r = roleRepository.getRole(role.DRIVER);
+             // .orElseThrow(()->new RuntimeException("Error: Role is not found."));
+      user.setRole(r);
+      a.setName("DRIVER");
+    }else{
+      Role r = roleRepository.getRole(role.CAMPER);
+              //.orElseThrow(()->new RuntimeException("Error: Role is not found."));
+      user.setRole(r);
+      a.setName("CAMPER");
+    }
+    userRepository.save(user);
+    //System.out.println(user.getRole().toString());
+//    a.setName(user.getRole().toString());
+    a.setUserAuth(user);
+    autorityRepository.save(a);
+    userIService.sendVerificationEmail(user,getSiteURL(req));
+    return ResponseEntity.ok((new MessageResponse("registration successfully")));
+
+  }
+  private String getSiteURL(HttpServletRequest request) {
+    String siteURL = request.getRequestURL().toString();
+    return siteURL.replace(request.getServletPath(), "");
+  }
+  /*
+  public ResponseEntity<AuthenticationResponse> register(@RequestBody User request) {
     return ResponseEntity.ok(service.register(request));
   }
+*/
 
     @PostMapping("/authenticate")
+    @CrossOrigin("http://localhost:4200")
   public Authentication authenticate(
       @RequestBody AuthenticationRequest request
   ) {
     User user = userRepository.getUserByUsername(request.getEmail());
+    if(user!=null){
     user.setLastCnx(new Date());
-    userRepository.save(user);
+    user.setLastC(false);
+    userRepository.save(user);}
     return service.authenticate(request);
   }
 

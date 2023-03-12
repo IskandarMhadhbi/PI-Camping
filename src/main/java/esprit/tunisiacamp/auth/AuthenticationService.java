@@ -67,7 +67,9 @@ public class AuthenticationService {
     saveUserToken(user, jwtToken);
      AuthenticationResponse.builder()
         .token(jwtToken)
-        .build();}
+        .build();
+
+    }
      return new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword(),authorities);
   }
 
