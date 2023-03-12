@@ -56,11 +56,14 @@ public class User implements Serializable, UserDetails {
     State state;
     String verificationCode;
     boolean enable;
+<<<<<<< HEAD
     String verifiepwd;
     @Temporal(TemporalType.DATE)
     Date lastCnx;
     String lastCnxCode;
     Boolean lastC;
+=======
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
     Boolean availability;
     @JsonIgnore
     @ManyToMany

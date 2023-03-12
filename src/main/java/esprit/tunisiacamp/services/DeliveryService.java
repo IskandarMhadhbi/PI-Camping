@@ -177,18 +177,24 @@ public class DeliveryService implements IDeliveryService {
         return price;
     }
     @Override
+<<<<<<< HEAD
     public List<String> findDeliveryLocationsForDrivers() {
         return deliveryRepository.findDriverLocations();
     }
     @Override
     public void assignDriverToDelivery(Long deliveryId, Long driverId) {
         User driver = userRepository.findById(Math.toIntExact(driverId)).get();
+=======
+    public void assignDriverToDelivery(Long deliveryId, Long driverId) {
+        User driver = userRepository.findById(driverId).get();
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
         if (driver != null && driver.getRole().getRole() == role.DRIVER) {
             Delivery delivery = deliveryRepository.findById(deliveryId).get();
             driver.getDeliveryList().add(delivery);
             deliveryRepository.save(delivery);
         }
     }
+<<<<<<< HEAD
         @Override
         public void assignDriverToDeliverybydistance(long idDelivery) {
         List<String> driverLocations = deliveryRepository.findDriverLocations();
@@ -216,3 +222,11 @@ public class DeliveryService implements IDeliveryService {
 }
 
 
+=======
+
+    @Override
+    public List<String> findDeliveryLocationsForDrivers() {
+        return deliveryRepository.findDriverLocations();
+    }
+}
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df

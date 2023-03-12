@@ -41,8 +41,11 @@ public class DeliveryRestController {
     public List<String> findDeliveryLocationsForDrivers() {
         return iDeliveryService.findDeliveryLocationsForDrivers();
     }
+<<<<<<< HEAD
     @PutMapping("/affecterdriver")
     public void assignDriverToDelivery(long idDelivery) {
         iDeliveryService.assignDriverToDeliverybydistance(idDelivery);
     }
+=======
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
 }

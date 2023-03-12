@@ -1,11 +1,15 @@
 package esprit.tunisiacamp.restControllers;
 
 import esprit.tunisiacamp.entities.Claim;
+<<<<<<< HEAD
 import esprit.tunisiacamp.entities.enums.Category;
+=======
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
 import esprit.tunisiacamp.repositories.ClaimRepository;
 import esprit.tunisiacamp.services.IClaimsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +25,19 @@ public class ClaimRestController {
     IClaimsService iClaimsService;
 //@Autowired
     //ClaimRepository claimRepository;
+=======
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@Tag(name="Manager of Claim")
+public class ClaimRestController {
+@Autowired
+    IClaimsService iClaimsService;
+@Autowired
+    ClaimRepository claimRepository;
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
 
 @PostMapping("/addclaim")
     public void addclaim(@RequestBody Claim c){
@@ -60,6 +77,7 @@ public class ClaimRestController {
     public List<Claim>  retriveclaims(){
         return iClaimsService.getAllClaims();
     }
+<<<<<<< HEAD
     @PutMapping("/resolveclaims")
     public void processUnresolvedClaims(long adminId) {
     iClaimsService.processUnresolvedClaims(adminId);
@@ -78,4 +96,6 @@ public class ClaimRestController {
     public Map<Category, Long> countClaimsByCategoryBetweenDates(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date startDate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd")Date endDate) {
     return iClaimsService.countClaimsByCategoryBetweenDates(startDate,endDate);
     }*/
+=======
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
 }

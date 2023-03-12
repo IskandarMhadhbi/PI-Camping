@@ -1,6 +1,7 @@
 package esprit.tunisiacamp.repositories;
 
 import esprit.tunisiacamp.entities.Claim;
+<<<<<<< HEAD
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +19,11 @@ public interface ClaimRepository extends CrudRepository<Claim,Long> {
     List<Object[]> countByCategory();
     @Query("SELECT c.category, COUNT(c) FROM Claim c WHERE c.creation BETWEEN :startDate AND :endDate GROUP BY c.category")
     List<Object[]> countClaimsByCategoryBetweenDates(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+=======
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ClaimRepository extends CrudRepository<Claim,Long> {
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
 }

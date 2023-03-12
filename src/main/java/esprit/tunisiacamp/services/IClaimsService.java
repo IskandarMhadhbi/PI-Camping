@@ -1,12 +1,17 @@
 package esprit.tunisiacamp.services;
 
 import esprit.tunisiacamp.entities.Claim;
+<<<<<<< HEAD
 import esprit.tunisiacamp.entities.enums.Category;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+=======
+
+import java.util.List;
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
 
 public interface IClaimsService {
     void addclaim(Claim c);
@@ -19,10 +24,13 @@ public interface IClaimsService {
    // public  List<Claim> sortedClaimbysentiment(List<Claim> claims);
     List<Claim> sortedComplaintsBySentiment(List<Claim> complaints);
     public List<Claim> getAllClaims();
+<<<<<<< HEAD
     List<Claim> getUnresolvedClaims();
      void processUnresolvedClaims(long adminId) ;
     //long ClaimProcessor(long adminId);
     List<Object[]> countClaimsByCategory();
      Map<String, Long> getClaimsByCategory();
     Map<Category, Long> countClaimsByCategoryBetweenDates(Date startDate, Date endDate);
+=======
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
 }

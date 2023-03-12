@@ -16,5 +16,8 @@ public interface IDeliveryService {
     public void assignDriverToDelivery(Long deliveryId, Long driverId);
 
     List<String> findDeliveryLocationsForDrivers();
+<<<<<<< HEAD
     public void assignDriverToDeliverybydistance(long idDelivery) ;
+=======
+>>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
 }
