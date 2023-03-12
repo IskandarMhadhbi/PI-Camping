@@ -55,7 +55,7 @@ public class Scheduler {
             }
         }
     }
-    @Scheduled(cron = "* * * * * *")
+    //@Scheduled(cron = "* * * * * *")
     public void affecterUserARole(){
         List<User> users = (List<User>) userRepository.findAll();
         for (User u : users){

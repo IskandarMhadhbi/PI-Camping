@@ -90,7 +90,7 @@ public class UserService implements UserIService{
     @Override
     public void sendVerificationEmail(User user, String siteURL) throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
-        String fromAddress = "benabdallah.jalel@esprit.tn";
+        String fromAddress = "aladin.hammouda@esprit.tn";
         String senderName = "Camping";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
