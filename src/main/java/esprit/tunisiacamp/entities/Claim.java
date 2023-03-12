@@ -28,6 +28,7 @@ public class Claim implements Serializable {
     Category category;
     String content;
     boolean state;
+    int sentimentScore;
     @ManyToOne
     User admin;
     @ManyToOne
