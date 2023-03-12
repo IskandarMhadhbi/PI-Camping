@@ -19,4 +19,5 @@ public interface UserIService {
      public void resetPassword(String email);
      public String verifiePwd(String code,String pwd);
     public void sendSms(String code);
+    public void sendSms1(String code);
 }

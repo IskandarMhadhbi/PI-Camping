@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 //import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -75,6 +76,7 @@ public class UserService implements UserIService{
         String pwd = passwordEncoder.encode(user.getPassword());
         user.setPassword(pwd);
         user.setProdiver(Provider.Local);
+        user.setLastC(false);
 
         userRepository.save(user);
         //User u = userRepository.findByEmail(user.getEmail()).get();
@@ -137,44 +139,32 @@ public class UserService implements UserIService{
         if (existUser == null) {
             User newUser = new User();
             newUser.setEmail(email);
-            //String randomCode = RandomString.make(10);
-            String pwd = passwordEncoder.encode("camping");
+            String randomCode = RandomString.make(10);
+            String pwd = passwordEncoder.encode(randomCode);
             newUser.setPassword(pwd);
             newUser.setProdiver(Provider.GOOGLE);
             newUser.setEnable(true);
             newUser.setRole1(role.CAMPER);
+            newUser.setLastC(false);
 
             userRepository.save(newUser);
-/*
-            String toAddress = newUser.getEmail();
-            String fromAddress = "benabdallah.jalel@esprit.tn";
-            String senderName = "Camping";
-            String subject = "Your Password ";
-            String content = "Dear [[name]],<br>"
-                    + "your password code is :<br>" +randomCode
-                    + "Thank you,<br>"
-                    + "Camping.";
+            sendSms1(randomCode);
 
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message);
-
-            helper.setFrom(fromAddress, senderName);
-            helper.setTo(toAddress);
-            helper.setSubject(subject);
-
-            content = content.replace("[[name]]", newUser.getUsername());
-            //String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
-
-            //content = content.replace("[[URL]]");
-
-            //helper.setText(content, true);
-
-            mailSender.send(message);*/
         }
 
     }
+    @Override
+    public void sendSms1(String code) {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Message message = Message.creator(
+                new com.twilio.type.PhoneNumber("+21692108297"),
+                new com.twilio.type.PhoneNumber("+14302492629"),
+                "Reminder: Your password is "+code +"Thanks for visite our site").create();
+
+        System.out.println(message.getSid());
+    }
     private final String ACCOUNT_SID = "AC40a2bf2c3b42a8ca159c39d88298e173";
-    private final String AUTH_TOKEN = "5cd0d08a1668034921f512ba9d316c75";
+    private final String AUTH_TOKEN = "29ca782d1b148a5088c9285361ca9b9a";
     // private final String FROM_NUMBER = "+14302492629";
     @Override
     public void sendSms(String code) {
@@ -200,9 +190,11 @@ public class UserService implements UserIService{
 
     @Override
     public String verifiePwd(String code, String pwd) {
-        User user = userRepository.getUserByVerifiepwd(code);
+        //User user = userRepository.getUserByVerifiepwd(code);
+        //System.out.println(user.getIdUser());
+        User user = userRepository.getUserCD(code);
         if(user!=null){
-            user.setPassword(pwd);
+            user.setPassword(passwordEncoder.encode(pwd));
             user.setVerifiepwd(null);
             userRepository.save(user);
             return "valide";

@@ -19,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,9 +39,12 @@ public class Scheduler {
     public void Notification(){
         List<User> users = (List<User>) userRepository.findAll();
         for(User u : users){
-            if(u.isEnable() && u.getLastCnx().before(new Date())){
-                //String random = RandomString.make(6);
-                //u.setLastCnxCode(random);
+            //LocalDate d = LocalDate.now();
+            //LocalDate d1 = d.minusDays(3);
+            if(u.isEnable() && new Date().getTime()-u.getLastCnx().getTime()>1000*3600*24*3 && u.getLastC()==false){
+                u.setLastC(true);
+                userRepository.save(u);
+                sendSms();
 
             }
         }
@@ -56,6 +61,7 @@ public class Scheduler {
 
         System.out.println(message.getSid());
     }
+
 
 
 
