@@ -106,7 +106,7 @@ public class WebSecurityConfig  {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers("/addCamping","/AllCamp/**","/register","/authenticate","/login/oauth/**","/login/**","/rest/swagger-ui/index.html#/","/process_register","/verify","/affecterUserToRole/**","/resetpwd/**","/verifiePwd/**")
+                .antMatchers("/register","/pay","/authenticate","/login/oauth/**","/login/**","/rest/swagger-ui/index.html#/","/process_register","/verify","/affecterUserToRole/**","/resetpwd/**","/verifiePwd/**")
                 //.permitAll().antMatchers(HttpMethod.OPTIONS,"/**")
                 .permitAll()
                 .anyRequest()
