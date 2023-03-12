@@ -1,6 +1,7 @@
 package esprit.tunisiacamp.services;
 
 import esprit.tunisiacamp.entities.User;
+import esprit.tunisiacamp.entities.forum.Comment;
 import esprit.tunisiacamp.entities.forum.Mots;
 import esprit.tunisiacamp.entities.forum.Post;
 import esprit.tunisiacamp.repositories.MotsREpository;
@@ -56,6 +57,8 @@ public class ServicePoste implements IservicePoste {
     public List<Post> getposts() {
         return (List<Post>) postRepository.findAll();
     }
+
+
     @Override
     public boolean contientMotInterdit(String ContentPost) {
         List<Mots> motsInterdits = (List<Mots>) motsREpository.findAll();
@@ -65,6 +68,13 @@ public class ServicePoste implements IservicePoste {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<Comment> getCommentsByPost(long idPost) {
+Post post= postRepository.findById(idPost).get();
+List<Comment> commentList=post.getComments();
+        return commentList;
     }
 
 }

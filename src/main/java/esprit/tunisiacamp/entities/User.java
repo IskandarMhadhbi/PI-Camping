@@ -59,6 +59,8 @@ public class User implements Serializable {
     CampingGround managed_ground;
     @OneToMany(mappedBy = "shopper")
     List<Transaction> transactions;
+    @OneToMany(mappedBy ="userreponse")
+    List<Reponse> reponseListuser ;
 
     public void addChatroom(ChatRoom chatroom) {
     }

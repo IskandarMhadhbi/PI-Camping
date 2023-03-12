@@ -21,9 +21,16 @@ public class GestionDesCommentaires {
         if (iserviceCommentaire.contientMotInterdit(m.getContentComment().toLowerCase())) {
             return ("votre commentaire  contient un mot interdit. " );
         }
+
+
+
+
         iserviceCommentaire.ajoutercommentare(m,idPost,idUser);
 
         return "votre commentaire est ajouter avec succes" ;
+
+
+
 
     }
 

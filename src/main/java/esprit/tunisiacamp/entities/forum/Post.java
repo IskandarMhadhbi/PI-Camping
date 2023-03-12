@@ -25,18 +25,10 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long idPost;
     String ContentPost;
-  //  @Temporal(TemporalType.DATE)
-  //  @Column(nullable = false)
+
     LocalDateTime  creation;
-/*
-    @PrePersist
-    private void onCreate() {
-        creation = new Date();
-    }
-    */
 
     @JsonIgnore
-
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     List<Comment> comments;
     @JsonIgnore

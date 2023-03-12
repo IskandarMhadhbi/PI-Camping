@@ -29,6 +29,6 @@ public class ChatRoom implements Serializable {
     @ManyToMany(mappedBy = "chatRooms")
     List<User> users;
     @OneToMany(mappedBy = "chatRoom")
-    List<Message> messages;
+    List<Messagee> messagees;
 
 }

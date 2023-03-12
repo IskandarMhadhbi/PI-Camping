@@ -11,6 +11,7 @@ import esprit.tunisiacamp.repositories.postRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -32,6 +33,7 @@ public class ServiceCommentaire implements IserviceCommentaire{
 
         m.setPost(post);
         m.setUser(user);
+        m.setCreationComment(LocalDateTime.now());
 
         commentRepository.save(m);
     }
@@ -64,4 +66,9 @@ public class ServiceCommentaire implements IserviceCommentaire{
         }
         return false;
     }
+
+
+
+
+
 }

@@ -5,7 +5,6 @@ import esprit.tunisiacamp.entities.forum.Post;
 import esprit.tunisiacamp.entities.forum.Rating;
 import esprit.tunisiacamp.repositories.RtingRepository;
 import esprit.tunisiacamp.repositories.UserRepository;
-import esprit.tunisiacamp.repositories.postRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +36,13 @@ public class ServiceLike implements IserviceLike {
         Rating ratingg = ratingRepository.findById(rating.getIdRating()).get();
         ratingg.setValue(rating.getValue());
         ratingRepository.save(ratingg);
+    }
+
+    @Override
+    public List<Rating> listelike(long idPoste) {
+        Post post =postRepository.findById(idPoste).get() ;
+    List<Rating> likes=     post.getRatings() ;
+        return likes;
     }
 
     @Override

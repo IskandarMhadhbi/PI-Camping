@@ -12,4 +12,6 @@ public interface IserviceLike {
     void supprimerlike(long idlike);
 
     public void modifrate(Rating rating);
+
+    List<Rating> listelike (long idPoste) ;
 }

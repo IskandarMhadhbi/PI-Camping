@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.services;
 
+import esprit.tunisiacamp.entities.User;
 import esprit.tunisiacamp.entities.forum.Comment;
 
 import java.util.List;

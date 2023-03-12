@@ -2,8 +2,8 @@ package esprit.tunisiacamp.services;
 
 import esprit.tunisiacamp.entities.User;
 import esprit.tunisiacamp.entities.forum.ChatRoom;
-import esprit.tunisiacamp.entities.forum.Message;
-import esprit.tunisiacamp.repositories.MessageRepository;
+import esprit.tunisiacamp.entities.forum.Messagee;
+import esprit.tunisiacamp.repositories.MessageeRepository;
 import esprit.tunisiacamp.repositories.RoomRespository;
 import esprit.tunisiacamp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ServiceMessage implements IserviceMessage{
     @Autowired
-    MessageRepository messageRepository;
+    MessageeRepository messageeRepository;
     @Autowired
     RoomRespository roomRespository;
     @Autowired
@@ -23,25 +23,25 @@ public class ServiceMessage implements IserviceMessage{
 
     @Override
 
-    public void ajouterMessage(Message m, long idUser, long chatroom) {
+    public void ajouterMessage(Messagee m, long idUser, long chatroom) {
         User user = userRepository.findById(idUser).get();
         ChatRoom room = roomRespository.findById(chatroom).get();
 
         m.setUser(user);
         m.setChatRoom(room);
 
-        messageRepository.save(m);
+        messageeRepository.save(m);
     }
 
     @Override
     public void supprimermessage(long idmsg) {
-        messageRepository.deleteById(idmsg);
+        messageeRepository.deleteById(idmsg);
     }
 
     @Override
-    public List<Message> getmessages() {
+    public List<Messagee> getmessages() {
 
-        return (List<Message>) messageRepository.findAll();
+        return (List<Messagee>) messageeRepository.findAll();
 
     }
 }

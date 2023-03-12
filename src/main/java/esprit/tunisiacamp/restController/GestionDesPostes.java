@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.restController;
 
+import esprit.tunisiacamp.entities.forum.Comment;
 import esprit.tunisiacamp.entities.forum.Post;
 import esprit.tunisiacamp.services.IservicePoste;
 import esprit.tunisiacamp.services.Iservices;
@@ -51,4 +52,11 @@ public class GestionDesPostes {
     void modifposte(@RequestBody Post post){
         iservicePoste.modifpost(post);
     }
+
+    @GetMapping("/getCommentByPost")
+    public List<Comment> getCommentByPost (@RequestParam long idPost){
+
+        return iservicePoste.getCommentsByPost(idPost);
+    }
+
 }

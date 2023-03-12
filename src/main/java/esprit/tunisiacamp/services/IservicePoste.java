@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.services;
 
+import esprit.tunisiacamp.entities.forum.Comment;
 import esprit.tunisiacamp.entities.forum.Post;
 
 import java.util.List;
@@ -13,6 +14,6 @@ public interface IservicePoste {
 
     public void modifpost(Post post);
     boolean contientMotInterdit(String ContentPost);
-
+    public List<Comment> getCommentsByPost(long idPost);
 
 }

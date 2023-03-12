@@ -21,7 +21,7 @@ public class Restcontroller {
     }
 
 
-@PostMapping("adddmots")
+@PostMapping("AjouterMotsInterdit")
     void ajouter(@RequestBody List<Mots>mots){
         iservices.ajoutermots(mots);
 }

@@ -1,8 +1,7 @@
 package esprit.tunisiacamp.restController;
 
-import esprit.tunisiacamp.entities.forum.Message;
+import esprit.tunisiacamp.entities.forum.Messagee;
 import esprit.tunisiacamp.services.IserviceMessage;
-import esprit.tunisiacamp.services.Iservices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +13,11 @@ public class GestionDesMessges {
     IserviceMessage iserviceMessage ;
 
     @PutMapping("EnvoyerMessage")
-    void ajoutermessage(@RequestBody Message m, @RequestParam long idUser, @RequestParam long chatroom ){
+    void ajoutermessage(@RequestBody Messagee m, @RequestParam long idUser, @RequestParam long chatroom ){
         iserviceMessage.ajouterMessage(m, idUser ,chatroom); ;
     }
     @GetMapping("AfficherMessages")
-    public List<Message> getmsg (){
+    public List<Messagee> getmsg (){
         return iserviceMessage.getmessages();
     }
     @DeleteMapping("SupprimerMsg")

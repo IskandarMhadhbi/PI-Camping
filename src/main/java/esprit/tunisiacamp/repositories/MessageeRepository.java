@@ -1,10 +1,10 @@
 package esprit.tunisiacamp.repositories;
 
-import esprit.tunisiacamp.entities.forum.Message;
+import esprit.tunisiacamp.entities.forum.Messagee;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface MessageRepository extends CrudRepository<Message, Long> {
+public interface MessageeRepository extends CrudRepository<Messagee, Long> {
 }

@@ -1,14 +1,14 @@
 package esprit.tunisiacamp.services;
 
-import esprit.tunisiacamp.entities.forum.Message;
+import esprit.tunisiacamp.entities.forum.Messagee;
 
 import java.util.List;
 
 public interface IserviceMessage {
 
-    public void ajouterMessage(Message m, long idUser, long chatroom);
+    public void ajouterMessage(Messagee m, long idUser, long chatroom);
 
-    public List<Message> getmessages();
+    public List<Messagee> getmessages();
 
     void supprimermessage(long idmsg);
 }

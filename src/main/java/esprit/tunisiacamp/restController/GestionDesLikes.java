@@ -32,4 +32,10 @@ public class GestionDesLikes {
     void modifrate(@RequestBody Rating rating){
         iserviceLike.modifrate(rating);
     }
+
+    @GetMapping("AfficheLikesParposte")
+    public List<Rating> getlikesss (@RequestParam  long  idPoste){
+        return  iserviceLike.listelike(idPoste);
+    }
+
 }
