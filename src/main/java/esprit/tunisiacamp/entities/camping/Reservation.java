@@ -1,5 +1,9 @@
 package esprit.tunisiacamp.entities.camping;
 
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import esprit.tunisiacamp.entities.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -26,8 +30,11 @@ public class Reservation implements Serializable {
     Date start_date;
     @Temporal(TemporalType.DATE)
     Date end_date;
+    String etat;
     @ManyToOne
+    @JsonIgnore
     CampingGround campingGround;
     @OneToOne
+    @JsonIgnore
     private User userReservation;
 }
