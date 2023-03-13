@@ -1,5 +1,7 @@
 package esprit.tunisiacamp.Camping;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import esprit.tunisiacamp.entities.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,5 +33,11 @@ public class Camping implements Serializable {
     private Date checkInDate;
     @Temporal(TemporalType.DATE)
     private Date checkOutDate;
-    private String specialRequests;
+    //private String specialRequests;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User createur;
+    @JsonIgnore
+    @OneToMany(mappedBy = "campingGroupe")
+    private List<User> listgroup;
 }

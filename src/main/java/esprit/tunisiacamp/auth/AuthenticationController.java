@@ -11,6 +11,7 @@ import esprit.tunisiacamp.repositories.RoleRepository;
 import esprit.tunisiacamp.repositories.UserRepository;
 import esprit.tunisiacamp.services.UserIService;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -54,37 +55,61 @@ public class AuthenticationController {
     String rol = request.getRole();
     Autority a = new Autority();
     //role setRole;
-    if(rol.equals("ADMIN")){
+    if(rol==null){
+      return ResponseEntity.badRequest().body(new MessageResponse("Role IS NULL"));
+    } else if(rol.equals("ADMIN")){
       Role r = roleRepository.getRole(role.ADMIN);
+      if(r==null){
+        return ResponseEntity.badRequest().body(new MessageResponse("Role ADMIN NOT FOUND"));
+      }
               //.orElseThrow(()->new RuntimeException("Error: Role is not found."));
       user.setRole(r);
       a.setName("ADMIN");
     } else if (rol.equals("CAMPER")) {
       Role r = roleRepository.getRole(role.CAMPER);
+      if(r==null){
+        return ResponseEntity.badRequest().body(new MessageResponse("Role CAMPER NOT FOUND"));
+      }
               //.orElseThrow(()->new RuntimeException("Error: Role is not found."));
       user.setRole(r);
       a.setName("CAMPER");
     }else if (rol.equals("MANAGER")) {
       Role r = roleRepository.getRole(role.MANAGER);
+      if(r==null){
+        return ResponseEntity.badRequest().body(new MessageResponse("Role MANAGER NOT FOUND"));
+      }
               //.orElseThrow(()->new RuntimeException("Error: Role is not found."));
       user.setRole(r);
       a.setName("MANAGER");
     }else if (rol.equals("SHOP")) {
       Role r = roleRepository.getRole(role.SHOP);
+      if(r==null){
+        return ResponseEntity.badRequest().body(new MessageResponse("Role SHOP NOT FOUND"));
+      }
              // .orElseThrow(()->new RuntimeException("Error: Role is not found."));
       user.setRole(r);
       a.setName("SHOP");
     }else if (rol.equals("DRIVER")) {
       Role r = roleRepository.getRole(role.DRIVER);
+      if(r==null){
+
+        return ResponseEntity.badRequest().body(new MessageResponse("Role DRINVER NOT FOUND"));
+      }
              // .orElseThrow(()->new RuntimeException("Error: Role is not found."));
       user.setRole(r);
       a.setName("DRIVER");
     }else{
       Role r = roleRepository.getRole(role.CAMPER);
+      /*if(r==null){
+        return ResponseEntity.badRequest().body(new MessageResponse("Verifie le role"));
+      }
               //.orElseThrow(()->new RuntimeException("Error: Role is not found."));
       user.setRole(r);
-      a.setName("CAMPER");
+      a.setName("CAMPER");*/
+      return ResponseEntity.badRequest().body(new MessageResponse("VERIFY THE ROLE "));
     }
+    String randomCode = RandomString.make(64);
+    user.setVerificationCode(randomCode);
     userRepository.save(user);
     //System.out.println(user.getRole().toString());
 //    a.setName(user.getRole().toString());
