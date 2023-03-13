@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.tunisiacamp.entities.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import javax. persistence.*;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -19,23 +18,19 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 
-public class Comment implements Serializable {
+public class Reponse implements Serializable  {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    long idComment;
-    String contentComment;
-    LocalDateTime creationComment;
-    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long idReponse;
+    String Reponsecom;
 
+    LocalDateTime dateReponse;
+
+    @JsonIgnore
     @ManyToOne
-    User user;
+    Comment reponsecomm  ;
     @JsonIgnore
-
     @ManyToOne
-    Post post;
-
-    @JsonIgnore
-    @OneToMany (mappedBy = "reponsecomm", cascade = CascadeType.REMOVE)
-    List<Reponse> reponses;
+    User userreponse ;
 
 }

@@ -21,11 +21,14 @@ public class ChatRoom implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long idChatRoom;
-    String name;
-    @Temporal(TemporalType.DATE)
-    Date creation;
+
+
+    String nameRoom;
+    @Temporal(TemporalType.TIME)
+    Date creationRoom;
     @ManyToMany(mappedBy = "chatRooms")
     List<User> users;
     @OneToMany(mappedBy = "chatRoom")
-    List<Message> messages;
+    List<Messagee> messagees;
+
 }

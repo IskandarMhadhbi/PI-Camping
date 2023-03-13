@@ -66,8 +66,12 @@ public class User implements Serializable, UserDetails {
     @JsonIgnore
     @ManyToMany
     List<ChatRoom> chatRooms;
+
+    @OneToMany (mappedBy = "user", cascade = CascadeType.REMOVE)
+
     @JsonIgnore
     @OneToMany
+
     List<Post> posts;
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -81,6 +85,10 @@ public class User implements Serializable, UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "shopper")
     List<Transaction> transactions;
+
+    @OneToMany(mappedBy ="userreponse")
+    List<Reponse> reponseListuser ;
+
     @ManyToOne()
     User shopper;
     @OneToMany(mappedBy = "shopper")
@@ -141,4 +149,7 @@ public class User implements Serializable, UserDetails {
         return password;
     }
 
+
+    public void addChatroom(ChatRoom chatroom) {
+    }
 }

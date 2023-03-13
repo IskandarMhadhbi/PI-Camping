@@ -1,5 +1,19 @@
 package esprit.tunisiacamp.services;
 
+
+
+import esprit.tunisiacamp.model.Userr;
+
+import java.util.HashSet;
+import java.util.List;
+
+public interface UserService {
+    List<Userr> getall() ;
+
+    Userr addUser(Userr userr) ;
+
+    HashSet<Userr> getUserByUserName(String username)  ;
+
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import esprit.tunisiacamp.entities.Autority;
@@ -207,4 +221,5 @@ public class UserService implements UserIService{
         }
         return "Verifie your code";
     }
+
 }
