@@ -3,6 +3,7 @@ package esprit.tunisiacamp.repositories;
 import esprit.tunisiacamp.entities.Autority;
 import esprit.tunisiacamp.entities.User;
 import esprit.tunisiacamp.entities.enums.State;
+import esprit.tunisiacamp.entities.enums.role;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -34,7 +36,12 @@ public interface UserRepository extends CrudRepository<User,Integer> {
     Optional<User> findByEmail(String email);
     Boolean existsByEmail(String email);
 
-
+    /* @Query("SELECT u FROM User u WHERE u.role = ?1 AND u.availability = ?2")
+       List<User> findByRoleAndAvailability(Role role, boolean availability);
+       List<User> findByIdAndRole(Long id, Role role);*/
+  /* @Query("SELECT DISTINCT u.location FROM User u WHERE u.role.role = 'DRIVER'")
+   List<String> findDriverLocations();*/
+    List<User> findByAddressAndRoleRole(String address, role role);
 
     
 }

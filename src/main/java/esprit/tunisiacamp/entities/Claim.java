@@ -28,6 +28,8 @@ public class Claim implements Serializable {
     Category category;
     String content;
     boolean state;
+    @Transient
+    int sentimentScore;
     @ManyToOne
     User admin;
     @ManyToOne
