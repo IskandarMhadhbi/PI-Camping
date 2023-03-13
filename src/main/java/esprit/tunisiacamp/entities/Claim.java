@@ -28,10 +28,7 @@ public class Claim implements Serializable {
     Category category;
     String content;
     boolean state;
-<<<<<<< HEAD
-=======
     @Transient
->>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
     int sentimentScore;
     @ManyToOne
     User admin;

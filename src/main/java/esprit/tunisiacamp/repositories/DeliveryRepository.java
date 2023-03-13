@@ -1,9 +1,6 @@
 package esprit.tunisiacamp.repositories;
 
-<<<<<<< HEAD
 import esprit.tunisiacamp.entities.Role;
-=======
->>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
 import esprit.tunisiacamp.entities.enums.role;
 import esprit.tunisiacamp.entities.shopping.Delivery;
 import org.springframework.data.jpa.repository.Query;
@@ -22,10 +19,6 @@ public interface DeliveryRepository extends CrudRepository<Delivery,Long> {
    Float findPricesByIdDelivery(@Param("idDelivery") Long idDelivery);
    /* @Query("SELECT d.location FROM Delivery d JOIN d.shipments t JOIN t.shopper u WHERE u.role.role = :role")
     List<String> findDeliveryLocationsForDrivers(@Param("role") role driverRole);*/
-<<<<<<< HEAD
-
-=======
->>>>>>> 868160218ec9782301b514cc81f4fd28223db5df
    @Query("SELECT DISTINCT u.address FROM User u WHERE u.role.role = 'DRIVER'")
    List<String> findDriverLocations();
 }

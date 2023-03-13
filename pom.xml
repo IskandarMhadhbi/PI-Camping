@@ -54,6 +54,7 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.6.9</version>
         </dependency>
+        <!--Spring Sentiment -->
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
@@ -64,6 +65,16 @@
             <artifactId>stanford-corenlp</artifactId>
             <version>4.5.2</version>
             <classifier>models</classifier>
+        </dependency>
+        <!--Spring Sentiment -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <!--Spring Securite -->
 
