@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +21,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -98,21 +101,22 @@ public class WebSecurityConfig  {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        //http.cors().disable();
         http
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers("/register","/pay","/authenticate","/login/oauth/**","/login/**","/rest/swagger-ui/index.html#/","/process_register","/verify","/affecterUserToRole/**")
+                .antMatchers("/register","/pay","/authenticate","/login/oauth/**","/login/**","/rest/swagger-ui/index.html#/","/process_register","/verify","/affecterUserToRole/**","/resetpwd/**","/verifiePwd/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin().permitAll()
-                .loginPage("/login")
-                .usernameParameter("email")
-                .passwordParameter("pass")
-                .defaultSuccessUrl("/rest/swagger-ui/index.html#")
-                .and()
+                //.formLogin().permitAll()
+                //.loginPage("/login")
+                //.usernameParameter("email")
+                //.passwordParameter("pass")
+                //.defaultSuccessUrl("/login")
+                //.and()
                 .oauth2Login()
                 .loginPage("/login")
                 .userInfoEndpoint()
@@ -137,6 +141,7 @@ public class WebSecurityConfig  {
                         } catch (MessagingException e) {
                             throw new RuntimeException(e);
                         }
+                        //response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
                         response.sendRedirect("/rest/swagger-ui/index.html#");
                     }
                 })
@@ -158,5 +163,16 @@ public class WebSecurityConfig  {
     private CustomOAuth2UserService oauthUserService;
     @Autowired
     UserIService userIService;
+/*
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*").allowedHeaders("*");
+            }
+        };
+    }
+*/
 
 }

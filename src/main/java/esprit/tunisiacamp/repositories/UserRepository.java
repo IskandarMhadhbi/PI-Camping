@@ -27,10 +27,14 @@ public interface UserRepository extends CrudRepository<User,Integer> {
     @Query("SELECT u FROM User u WHERE u.email = :username")
     public User getUserByUsername(@Param("username") String username);
 
-    @Query("SELECT u FROM User u WHERE u.verifiepwd = :code")
+    @Query("SELECT u FROM User u where u.verifiepwd=:code")
     public User getUserByVerifiepwd(@Param("code") String code);
 
+    @Query("SELECT u FROM User u WHERE u.verifiepwd=:cd")
+    public User getUserCD(@Param("cd") String code);
+
     Optional<User> findByEmail(String email);
+    Boolean existsByEmail(String email);
 
     /* @Query("SELECT u FROM User u WHERE u.role = ?1 AND u.availability = ?2")
        List<User> findByRoleAndAvailability(Role role, boolean availability);

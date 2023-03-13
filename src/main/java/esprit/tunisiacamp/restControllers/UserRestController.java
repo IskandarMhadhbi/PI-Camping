@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class UserRestController {
     @Autowired
     UserIService userIService;
@@ -83,12 +84,13 @@ public class UserRestController {
         return "redirect:/login?logout";
     }
 */
-    @PutMapping("/resetpwd")
-    public void resetPwd(String email){
+    //@PreAuthorize("hasAnyAuthority('CAMPER')")
+    @PutMapping("/resetpwd/{email}")
+    public void resetPwd(@PathVariable("email") String email){
         userIService.resetPassword(email);
     }
-    @GetMapping("/verifiePwd")
-    public  String verifiePwd(String code,String pwd){
+    @GetMapping("/verifiePwd/{code}/{pwd}")
+    public  String verifiePwd(@PathVariable("code") String code,@PathVariable("pwd") String pwd){
         return userIService.verifiePwd(code,pwd);
     }
 
