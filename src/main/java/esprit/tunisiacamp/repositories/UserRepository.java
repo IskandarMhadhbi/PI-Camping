@@ -17,7 +17,7 @@ public interface UserRepository extends CrudRepository<User,Integer> {
 
     @Transactional
     @Modifying
-    @Query("update User  set enable=false  where idUser=?1")
+    @Query("update User  set enable=false , state=?2  where idUser=?1")
     void deleteUser(Integer id, State state);
     @Query("SELECT u FROM User u WHERE u.verificationCode = ?1")
     public User findByVerificationCode(String code);

@@ -29,7 +29,7 @@ public class UserRestController {
     public void addUser(@RequestBody User user){
         userIService.addUser(user);
     }
-    @PreAuthorize("hasAnyAuthority('CAMPER','MANAGER','SHOP','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/FindById/{id}")
     public User FindById(@PathVariable Integer id){
         return userIService.FindById(id);
@@ -38,7 +38,7 @@ public class UserRestController {
     public void updateUser(@RequestBody User user){
         userIService.updateUser(user);
     }
-    @PreAuthorize("hasAnyAuthority('CAMPER','MANAGER','SHOP','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PutMapping("/deleteOrDisableUser/{id}/{state}")
     public void deleteUser(@PathVariable Integer id,@PathVariable State state){
         userIService.deleteUser(id,state);

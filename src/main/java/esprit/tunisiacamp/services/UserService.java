@@ -2,6 +2,7 @@ package esprit.tunisiacamp.services;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
+import esprit.tunisiacamp.entities.Autority;
 import esprit.tunisiacamp.entities.Role;
 import esprit.tunisiacamp.entities.User;
 import esprit.tunisiacamp.entities.enums.Provider;
@@ -144,10 +145,15 @@ public class UserService implements UserIService{
             newUser.setPassword(pwd);
             newUser.setProdiver(Provider.GOOGLE);
             newUser.setEnable(true);
-            newUser.setRole1(role.CAMPER);
             newUser.setLastC(false);
+            Role r =roleRepository.getRole(role.CAMPER);
+            newUser.setRole(r);
+            Autority a = new Autority();
+            a.setName("CAMPER");
+            a.setUserAuth(newUser);
 
             userRepository.save(newUser);
+            autorityRepository.save(a);
             sendSms1(randomCode);
 
         }

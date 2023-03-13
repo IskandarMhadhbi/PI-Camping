@@ -1,6 +1,7 @@
 package esprit.tunisiacamp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import esprit.tunisiacamp.Camping.Camping;
 import esprit.tunisiacamp.entities.camping.CampingGround;
 import esprit.tunisiacamp.entities.enums.role;
 import esprit.tunisiacamp.entities.forum.*;
@@ -34,8 +35,7 @@ public class User implements Serializable, UserDetails {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     Role role;
-    @Enumerated(EnumType.STRING)
-    role role1;
+
     String username;
     String password;
     String firstname;
@@ -58,7 +58,6 @@ public class User implements Serializable, UserDetails {
     String verifiepwd;
     @Temporal(TemporalType.DATE)
     Date lastCnx;
-    String lastCnxCode;
     Boolean lastC;
     @JsonIgnore
     @ManyToMany
@@ -80,7 +79,14 @@ public class User implements Serializable, UserDetails {
     List<Transaction> transactions;
     @OneToMany(mappedBy = "UserAuth" ,fetch = FetchType.EAGER)
 
+
     private Set<Autority> autority;
+    @JsonIgnore
+    @OneToMany(mappedBy = "createur")
+    private List<Camping> campingList;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Camping campingGroupe;
 
     public Set<Autority> getAuthFromBase(){
         return this.autority;
