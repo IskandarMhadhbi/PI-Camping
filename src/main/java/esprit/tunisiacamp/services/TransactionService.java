@@ -20,7 +20,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.ByteArrayOutputStream;
@@ -85,22 +87,31 @@ public class TransactionService implements TransactionIService {
             PdfWriter.getInstance(document, Files.newOutputStream(Paths.get("invoice.pdf")));
             document.open();
             // Add invoice header
-            Font font = FontFactory.getFont(FontFactory.COURIER_BOLD, 20, BaseColor.BLUE);
-            Paragraph header = new Paragraph("Invoice",font);
+            Font font4 = FontFactory.getFont(FontFactory.COURIER_BOLD, 20, BaseColor.BLACK);
+            Font font = FontFactory.getFont(FontFactory.COURIER_BOLD, 10, BaseColor.BLUE);
+            Paragraph header = new Paragraph("Invoice",font4);
             document.add(header);
             // Add transaction details
-            String content_transaction= "\n\n" +"Transaction Date : " + transaction.getCreation().toString() + "\n\n"
-                    + "payment : " + transaction.getPaid().toString() + "\n\n"
+            String content_transaction= "\n\n" +"Transaction Date : " + transaction.getCreation().toString() + "\n"
+                    + "serialid : " + transaction.getSerial_code() + "\n"
+                    + "payment : " + transaction.getPaid().toString() + "\n"
                     + "shipment : " + transaction.getFor_shipment().toString() + "\n\n";
             Chunk chunk1 = new Chunk(content_transaction, font);
             document.add(chunk1);
            // Add tool details
             Tool tool=to_repo.findById(transaction.getTool().getIdTool()).get();
-            String content_tool= "\n\n" +"Tool name : " + tool.getName() + "\n\n"
-                    + "price : " + tool.getPrice() + "\n\n"
+            String content_tool= "\n\n" +"Tool name : " + tool.getName() + "\n"
+                    + "price : " + tool.getPrice() + "\n"
                     + "type : " + tool.getType() + "\n\n";
             Chunk chunk2 = new Chunk(content_tool, font);
             document.add(chunk2);
+            Font font6 = FontFactory.getFont(FontFactory.COURIER_BOLD, 15, BaseColor.DARK_GRAY);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            System.out.println(dtf.format(now));
+            String datei=dtf.format(now);
+            Paragraph footer = new Paragraph("invoice date " + datei,font6);
+            document.add(footer);
             document.close();
 
     }
