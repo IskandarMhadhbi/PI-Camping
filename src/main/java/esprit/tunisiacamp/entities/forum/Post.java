@@ -1,10 +1,13 @@
 package esprit.tunisiacamp.entities.forum;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.tunisiacamp.entities.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import javax. persistence.*;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -19,15 +22,20 @@ import java.util.List;
 
 public class Post implements Serializable {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long idPost;
-    String Content;
-    @Temporal(TemporalType.DATE)
-    Date creation;
-    @OneToMany(mappedBy = "post")
+    String ContentPost;
+
+    LocalDateTime  creation;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     List<Comment> comments;
+    @JsonIgnore
     @ManyToOne
     User user;
-    @OneToMany(mappedBy = "post_rate")
+    @JsonIgnore
+
+    @OneToMany(mappedBy = "post_rate", cascade = CascadeType.REMOVE)
     List<Rating> ratings;
 }

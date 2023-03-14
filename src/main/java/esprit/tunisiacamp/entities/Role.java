@@ -16,7 +16,6 @@ import esprit.tunisiacamp.entities.enums.role;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-
 public class Role implements Serializable {
 
      @Id
@@ -24,6 +23,9 @@ public class Role implements Serializable {
      long idRole;
      @Enumerated(EnumType.STRING)
      role role;
-     @OneToMany
+
+     @OneToMany(mappedBy = "role")
      List<User> users;
+
+
 }

@@ -6,7 +6,6 @@ import lombok.experimental.FieldDefaults;
 import javax. persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -16,13 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class Message implements Serializable {
+public class Messagee implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long idMessage;
-    String content;
-    @Temporal(TemporalType.DATE)
-    Date creation;
+    String contentMessage;
+    @Temporal(TemporalType.TIME)
+    Date creationMessage;
     @ManyToOne
     ChatRoom chatRoom;
     @ManyToOne
