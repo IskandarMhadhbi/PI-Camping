@@ -39,7 +39,7 @@ public class Transaction implements Serializable {
     Boolean paid;
     Boolean for_shipment;
     String payment_method;
-    @JsonIgnore
+
     @ManyToOne
     Tool tool;
     @JsonIgnore

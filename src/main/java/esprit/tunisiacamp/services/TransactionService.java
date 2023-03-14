@@ -41,7 +41,11 @@ public class TransactionService implements TransactionIService {
     public Transaction addTransaction(Transaction transaction,long idShopper,long idTool) {
         User shopper=us_repo.findById(idShopper).get();
         transaction.setShopper(shopper);
-        transaction.setTool(to_repo.findById(idTool).get());
+        Tool tool=to_repo.findById(idTool).get();
+        if(tool.getStock()>0)
+             tool.setStock(tool.getStock()-1);
+        to_repo.save(tool);
+        transaction.setTool(tool);
         return tr_repo.save(transaction);
     }
 
