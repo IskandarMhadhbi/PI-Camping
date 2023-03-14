@@ -1,12 +1,19 @@
 package esprit.tunisiacamp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+<<<<<<< HEAD
 import esprit.tunisiacamp.Camping.Camping;
+=======
+>>>>>>> Iskandar
 import esprit.tunisiacamp.entities.camping.CampingGround;
 import esprit.tunisiacamp.entities.enums.role;
 import esprit.tunisiacamp.entities.forum.*;
 import esprit.tunisiacamp.entities.forum.Post;
+<<<<<<< HEAD
 import esprit.tunisiacamp.entities.shopping.Delivery;
+=======
+import esprit.tunisiacamp.entities.shopping.Tool;
+>>>>>>> Iskandar
 import esprit.tunisiacamp.entities.shopping.Transaction;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -32,9 +39,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements Serializable, UserDetails {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
+<<<<<<< HEAD
     Integer idUser;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
+=======
+    long idUser;
+    @JsonIgnore
+    @ManyToOne
+>>>>>>> Iskandar
     Role role;
 
     String username;
@@ -46,16 +59,21 @@ public class User implements Serializable, UserDetails {
     String email;
     int telephone;
     int cin;
+    String  picture;
+    //region shop_part
     String shopname;
     int shop_phone;
     int postal_code;
-    String address;
+    String shop_address;
+    String  shop_picture;
+    //endregion
     @Enumerated(EnumType.STRING)
     Provider  prodiver;
     @Enumerated(EnumType.STRING)
     State state;
     String verificationCode;
     boolean enable;
+<<<<<<< HEAD
 
     String verifiepwd;
     @Temporal(TemporalType.DATE)
@@ -69,6 +87,11 @@ public class User implements Serializable, UserDetails {
 
     @OneToMany (mappedBy = "user", cascade = CascadeType.REMOVE)
 
+=======
+    @JsonIgnore
+    @ManyToMany
+    List<ChatRoom> chatRooms;
+>>>>>>> Iskandar
     @JsonIgnore
     @OneToMany
 
@@ -85,6 +108,10 @@ public class User implements Serializable, UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "shopper")
     List<Transaction> transactions;
+    @JsonIgnore
+    @ManyToMany
+    List<Tool> my_tools;
+
 
     @OneToMany(mappedBy ="userreponse")
     List<Reponse> reponseListuser ;

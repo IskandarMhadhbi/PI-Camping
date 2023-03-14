@@ -1,5 +1,6 @@
 package esprit.tunisiacamp.entities.shopping;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax. persistence.*;
@@ -20,6 +21,8 @@ public class Critique implements Serializable {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     long idCritique;
     int rating;
+    String content;
+    @JsonIgnore
     @ManyToOne
     Tool tool;
 
