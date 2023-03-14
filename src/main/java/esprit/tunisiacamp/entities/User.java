@@ -48,11 +48,6 @@ public class User implements Serializable {
     int postal_code;
     String shop_address;
     String  shop_picture;
-    @ElementCollection
-    @CollectionTable(name="shop_profit")
-    @MapKeyColumn(name="month")
-    @Column(name="profit")
-    Map<String, Double> monthlyProfit;
     //endregion
     @Enumerated(EnumType.STRING)
     Provider  prodiver;

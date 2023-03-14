@@ -30,6 +30,8 @@ public class Transaction implements Serializable {
     @Enumerated(EnumType.STRING)
     Type type;
     @Temporal(TemporalType.DATE)
+    Date creation;
+    @Temporal(TemporalType.DATE)
     Date rent_start_date;
     @Temporal(TemporalType.DATE)
     Date rent_end_date;
