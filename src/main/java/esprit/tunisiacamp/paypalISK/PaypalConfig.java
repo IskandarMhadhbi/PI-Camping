@@ -1,6 +1,7 @@
 package esprit.tunisiacamp.paypalISK;
 
-import com.paypal.core.rest.APIContext;
+
+import com.paypal.base.rest.APIContext;
 import com.paypal.core.rest.OAuthTokenCredential;
 import com.paypal.core.rest.PayPalRESTException;
 import lombok.AccessLevel;

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.Console;
+
 @RestController
 public class PaypalController {
     @Autowired
@@ -18,16 +20,23 @@ public class PaypalController {
 
     public static final String SUCCESS_URL = "http://localhost:1111/pay/success";
     public static final String CANCEL_URL = "http://localhost:1111/pay/cancel";
+
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/home")
     public String home() {
         return "home";
     }
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/pay")
-    public ResponseEntity<?> payment(@RequestBody Transaction transaction) {
-        try {
-            Payment payment = service.createPayment((double)transaction.getPrice(), "USD", "paypal",
+    public RedirectView payment(@RequestBody Transaction transaction) {
+        System.out.println("approved");
+        System.out.println(transaction);
+        return service.payment(transaction);
+       /* try {
+            System.out.println("approved");
+            System.out.println(transaction);
+            Payment payment = service.createPayment((double) transaction.getPrice(), "USD", "paypal",
                     "sale", "description sample", CANCEL_URL, SUCCESS_URL);
             for (Links link : payment.getLinks()) {
                 if (link.getRel().equals("approval_url")) {
@@ -38,17 +47,31 @@ public class PaypalController {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Error creating payment");
         }
-        return ResponseEntity.badRequest().body("Cannot find approval URL");
+        return ResponseEntity.badRequest().body("Cannot find approval URL");*/
     }
+
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = CANCEL_URL)
     public RedirectView cancelPay() {
         return new RedirectView("http://localhost:1111/rest/cancel");
     }
+
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = SUCCESS_URL)
     public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
+
         try {
+            Payment payment = service.executePayment(paymentId, payerId);
+            System.out.println(payment.toJSON());
+            if (payment.getState().equals("approved")) {
+
+                return (" success");
+            }
+        } catch (PayPalRESTException | com.paypal.base.rest.PayPalRESTException e) {
+            System.out.println(e.getMessage());
+        }
+        return ("cancel");
+        /*try {
             Payment payment = service.executePayment(paymentId, payerId);
             System.out.println(payment.toJSON());
             if (payment.getState().equals("approved")) {
@@ -57,9 +80,10 @@ public class PaypalController {
         } catch (PayPalRESTException | com.paypal.base.rest.PayPalRESTException e) {
             System.out.println(e.getMessage());
         }
-        return "redirect:/";
+        return "redirect:/";*/
     }
 
+    //  1
 
     /*
     public static final String SUCCESS_URL = "pay/success";
@@ -88,7 +112,7 @@ public class PaypalController {
             e.printStackTrace();
         }
         return "redirect:/";*/
-    }/*
+    /*
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(value = CANCEL_URL)
     public RedirectView cancelPay() {
@@ -109,4 +133,8 @@ public class PaypalController {
         return "redirect:/";
     }*/
 
+    // 2
+
+
+}
 
